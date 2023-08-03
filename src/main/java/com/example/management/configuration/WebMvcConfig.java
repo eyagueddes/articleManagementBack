@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+
 public class WebMvcConfig implements WebMvcConfigurer {
     //lors de demarrage de projet ,on demande à spring de nous creer le BCryptPasswordEncoder qui sera ensuite utiliser dans service
     //dans tous les contexts(les variables) on cree un bean
