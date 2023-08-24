@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/role/")
+@RequestMapping("/role")
 public class RoleController {
 private final RoleRepository roleRepository;
 
@@ -33,7 +33,7 @@ private final RoleRepository roleRepository;
        return "role/listRoles";
 
     }
-    @PostMapping("add")
+    @PostMapping("/add")
     public Map addRole(@RequestParam("role") String role){
         Map<String,String> res=new HashMap<>();
        Role r=new Role(role);

@@ -1,24 +1,21 @@
 package com.example.management.configuration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
 
 import javax.sql.DataSource;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -40,40 +37,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .passwordEncoder(bCryptPasswordEncoder);
     }
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().
-//                disable()
-//                .authorizeRequests()
-//                .antMatchers("/role/add").permitAll()
-//                .antMatchers("/registration").permitAll()
-//                .antMatchers("/role/list").permitAll()
-//                .antMatchers(HttpMethod.OPTIONS, "/**")
-//                .permitAll()
-//              //  .antMatchers(HttpMethod.OPTIONS,"/providers/**").permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .httpBasic();
 
-//        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-//        corsConfiguration.setAllowedOrigins(List.of("*"));
-//        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
-//        corsConfiguration.setAllowCredentials(true);
-//        corsConfiguration.setExposedHeaders(List.of("Authorization"));
-        http.cors(Customizer.withDefaults()).csrf().disable()
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().
+                disable()
                 .authorizeRequests()
-                .antMatchers("/role/add").permitAll()
+                .antMatchers("/role/add").hasAnyRole("SuperAdmin")
                 .antMatchers("/role/list").permitAll()
                 .antMatchers("/registration").permitAll()
-                
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                .mvcMatchers(HttpMethod.OPTIONS,"/providers/**").permitAll()
+              //  .antMatchers(HttpMethod.POST, "/providers/add").permitAll()
+           //     .antMatchers(HttpMethod.PUT, "/providers/**").hasRole("SuperAdmin")
+                // web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
+        ;
 
 
     }
-
 }
