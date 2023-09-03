@@ -1,0 +1,58 @@
+# Docker Compose 
+version: '3.3'
+
+# Define services
+services:
+  # spring service
+  spring:
+    image: spring_app
+    ports:
+      - "8010:8084"
+    container_name: spring_cont
+    depends_on:
+      - database
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/newProject?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
+    networks:
+      - springnet
+
+  # Database Service (Mysql)
+  database:
+    image: mysql:latest
+    container_name: mysql_cont
+    volumes:
+      - db_v:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: newProject
+      MYSQL_USER: eya
+      MYSQL_PASSWORD: eya
+      MYSQL_ROOT_PASSWORD: eya
+    networks:
+      - springnet
+
+  # phpmyadmin Service 
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: pma_cont
+    depends_on:
+      - database
+    restart: always
+    ports:
+      - 8086:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - springnet
+
+# Dec
+volumes:
+  db_v:
+
+networks:
+  springnet:
+
+

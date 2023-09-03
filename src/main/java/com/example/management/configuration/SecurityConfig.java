@@ -42,12 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().
                 disable()
                 .authorizeRequests()
-                .antMatchers("/role/add").hasAnyRole("SuperAdmin")
+                .antMatchers("/role/add").permitAll()
                 .antMatchers("/role/list").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                .mvcMatchers(HttpMethod.OPTIONS,"/providers/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/providers/**").permitAll()
               //  .antMatchers(HttpMethod.POST, "/providers/add").permitAll()
            //     .antMatchers(HttpMethod.PUT, "/providers/**").hasRole("SuperAdmin")
                 // web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");

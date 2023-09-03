@@ -1,7 +1,4 @@
 package com.example.management.entities;
-
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
