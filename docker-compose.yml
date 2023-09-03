@@ -15,7 +15,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/newProject?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD:
+      SPRING_DATASOURCE_PASSWORD: eya
     networks:
       - springnet
 
@@ -31,6 +31,7 @@ services:
       MYSQL_USER: eya
       MYSQL_PASSWORD: eya
       MYSQL_ROOT_PASSWORD: eya
+      #je me database in server and eya comme username et mot de passse
     networks:
       - springnet
 
